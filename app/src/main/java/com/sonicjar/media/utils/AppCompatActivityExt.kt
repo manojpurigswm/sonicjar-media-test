@@ -10,7 +10,6 @@ import kotlinx.coroutines.flow.onEach
 
 fun AppCompatActivity.getViewModelFactory(): ViewModelFactory {
     val repository = (applicationContext as BaseApplication).getRepository
-    val application = (applicationContext as BaseApplication).getApplication
     return ViewModelFactory(repository, this)
 }
 

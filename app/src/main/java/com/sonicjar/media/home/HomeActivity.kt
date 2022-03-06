@@ -5,27 +5,20 @@ import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import com.sonicjar.media.BaseActivity
 import com.sonicjar.media.R
 import com.sonicjar.media.data.Track
-import com.sonicjar.media.data.source.file.readAssetsFile
 import com.sonicjar.media.databinding.ActivityHomeBinding
-import com.sonicjar.media.utils.afterTextChanged
 import com.sonicjar.media.utils.bind
 import com.sonicjar.media.utils.getViewModelFactory
-import com.sonicjar.media.utils.textChanged
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.debounce
-import kotlinx.coroutines.flow.filter
 
 class HomeActivity: BaseActivity<ActivityHomeBinding, HomeViewModel>() {
     override val layoutId: Int get() = R.layout.activity_home
