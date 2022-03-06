@@ -30,7 +30,7 @@ class FileDataSource internal constructor(
     override suspend fun getTracks(query: String): Flow<Resource<List<Track>>> = flow {
         emit(Resource.Loading)
         val resource = try {
-            val response = if(query.isNullOrEmpty()) fileFunctions.readTracksFromFile() else searchQuery(query, fileFunctions.readTracksFromFile())
+            val response = if(query.isNullOrEmpty()) fileFunctions.readTracksFromFile().sortedBy { it.trackID } else searchQuery(query, fileFunctions.readTracksFromFile())
             if(response.isNullOrEmpty()) Resource.Fail(Exception()) else Resource.Success(response)
         }
         catch (e: Exception){
@@ -57,11 +57,23 @@ class FileDataSource internal constructor(
         var orList = list
 
         while (queryList.size > 0){
-            val (match, rest) = orList.partition { it.trackTitle.split(" ").containsAll(queryList)}
+            val (match, rest) = orList.partition { it.trackTitle.split(" ").containsAll(queryList) && it.trackSubtitle.split(" ").containsAll(queryList)}
             arrayList.addAll(match)
-            queryList.removeAt(queryList.size - 1)
-
             orList = rest
+
+            val (match1, rest1) = orList.partition { it.trackTitle.split(" ").containsAll(queryList)}
+            arrayList.addAll(match1)
+            orList = rest1
+
+            val (match2, rest2) = orList.partition { it.trackSubtitle.split(" ").containsAll(queryList)}
+            arrayList.addAll(match2)
+            orList = rest2
+
+            val (match3, rest3) = orList.partition { it.trackID.toString().split(" ").containsAll(queryList)}
+            arrayList.addAll(match3)
+            orList = rest3
+
+            queryList.removeAt(queryList.size - 1)
         }
         return arrayList.distinct()
     }
