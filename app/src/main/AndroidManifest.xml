@@ -19,7 +19,7 @@
         android:theme="@style/Theme.SonicjarMedia"
         tools:targetApi="m">
         <activity
-            android:name=".home.HomeActivity"
+            android:name=".ui.home.HomeActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

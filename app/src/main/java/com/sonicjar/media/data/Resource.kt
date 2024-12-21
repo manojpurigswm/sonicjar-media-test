@@ -13,5 +13,6 @@ sealed class Resource<out T> {
 
     val isLoading get() = this is Loading
     val isFail get() = this is Fail
+    val isSuccess get() = this is Success
     val valueOrNull get() = (this as? Success)?.value
 }

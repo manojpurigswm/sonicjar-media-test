@@ -2,32 +2,17 @@ package com.sonicjar.media.data.source
 
 import com.sonicjar.media.data.Resource
 import com.sonicjar.media.data.Track
+import com.sonicjar.media.data.source.file.FileDataSource
+import com.sonicjar.media.data.source.remote.RemoteDataSource
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class BaseRepository internal constructor(
-    private val fileDataSource: BaseDataSource
-): Repository {
-    override suspend fun getTracks(forceUpdate: Boolean): Flow<Resource<List<Track>>> {
+class BaseRepository @Inject constructor(private val fileDataSource: FileDataSource, private val remoteDataSource: RemoteDataSource): Repository {
+    override suspend fun getTracks(forceUpdate: Boolean): Resource<List<Track>> {
         if(forceUpdate){
-            // here we update network data in local db
+            // here we update network data
+            return remoteDataSource.getTracks()
         }
         return fileDataSource.getTracks()
-    }
-
-    override suspend fun getTracks(
-        forceUpdate: Boolean,
-        query: String
-    ): Flow<Resource<List<Track>>> {
-        if(forceUpdate){
-            // here we update network data in local db
-        }
-        return fileDataSource.getTracks(query)
-    }
-
-    override suspend fun getTracksCount(forceUpdate: Boolean): Flow<Resource<Int>> {
-        if(forceUpdate){
-            // here we update network data in local db
-        }
-        return fileDataSource.getTracksCount()
     }
 }

@@ -1,4 +1,4 @@
-package com.sonicjar.media.home
+package com.sonicjar.media.ui.home
 
 import android.view.LayoutInflater
 import android.view.View

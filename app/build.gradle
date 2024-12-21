@@ -5,15 +5,14 @@ plugins {
 }
 
 android {
-    compileSdk 31
+    compileSdk 34
+    namespace 'com.sonicjar.media'
 
     defaultConfig {
         applicationId "com.sonicjar.media"
-        minSdk 21
-        targetSdk 31
+        minSdk 26
         versionCode 1
         versionName "1.0"
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -41,8 +40,8 @@ dependencies {
     def pagingVersion = "3.1.0"
 
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.4.1'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.8.5'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.7'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.4.1'
 
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesAndroidVersion"
@@ -72,9 +71,14 @@ dependencies {
     kapt 'com.github.bumptech.glide:compiler:4.12.0'
     implementation 'com.makeramen:roundedimageview:2.3.0'
 
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.8.1'
+    implementation "com.google.dagger:hilt-android:2.51.1"
+    kapt "com.google.dagger:hilt-compiler:2.51.1"
+
+    //debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.8.1'
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 }
+
+apply plugin: 'dagger.hilt.android.plugin'
