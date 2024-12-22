@@ -17,6 +17,7 @@ open class HomeViewModel @Inject constructor(private val dataRepository: Reposit
     val lists: SharedFlow<Resource<List<Track>>> = _lists
 
     fun getLists() = viewModelScope.launch{
+        _lists.emit(Resource.Loading)
         _lists.emit(dataRepository.getTracks(true))
     }
 
