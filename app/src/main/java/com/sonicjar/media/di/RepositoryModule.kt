@@ -29,6 +29,7 @@ object RepositoryModule {
         remoteDataSource: RemoteDataSource
     ): Repository = BaseRepository(fileDataSource, remoteDataSource)
 
+    @Singleton
     @Provides
     fun provideFileDataSource(fileFunctions: FileFunctions) : FileDataSource{
         return FileDataSource(fileFunctions)
