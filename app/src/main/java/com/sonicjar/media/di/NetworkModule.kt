@@ -2,6 +2,7 @@ package com.sonicjar.media.di
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.sonicjar.media.data.source.file.FileDataSource
 import com.sonicjar.media.data.source.remote.RetrofitCalls
 import dagger.Module
 import dagger.Provides
@@ -19,6 +20,12 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
+
+    @Provides
+    fun provideCoroutineDispatcher(): CoroutineDispatcher {
+        return Dispatchers.IO
+    }
+
     @Singleton
     @Provides
     fun provideRetrofitCalls(retrofit: Retrofit.Builder): RetrofitCalls {

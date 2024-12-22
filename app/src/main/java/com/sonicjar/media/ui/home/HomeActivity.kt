@@ -1,26 +1,16 @@
 package com.sonicjar.media.ui.home
 
-import android.content.Context
 import android.os.Build
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.view.View
-import android.view.inputmethod.EditorInfo
-import android.view.inputmethod.InputMethodManager
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sonicjar.media.BaseActivity
 import com.sonicjar.media.R
-import com.sonicjar.media.data.Track
 import com.sonicjar.media.databinding.ActivityHomeBinding
 import com.sonicjar.media.utils.bind
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @AndroidEntryPoint
 open class HomeActivity: BaseActivity<ActivityHomeBinding, HomeViewModel>() {

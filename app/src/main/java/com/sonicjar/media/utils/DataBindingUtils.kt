@@ -1,11 +1,6 @@
 package com.sonicjar.media.utils
 
-import android.text.SpannableString
-import android.text.style.UnderlineSpan
-import android.view.View
-import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.annotation.IdRes
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
