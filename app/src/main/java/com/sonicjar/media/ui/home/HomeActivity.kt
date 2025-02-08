@@ -2,11 +2,21 @@ package com.sonicjar.media.ui.home
 
 import android.os.Build
 import android.os.Bundle
+import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sonicjar.media.BaseActivity
+import com.sonicjar.media.BaseTheme
 import com.sonicjar.media.R
+import com.sonicjar.media.data.Track
 import com.sonicjar.media.databinding.ActivityHomeBinding
 import com.sonicjar.media.utils.bind
 import dagger.hilt.android.AndroidEntryPoint
@@ -15,15 +25,22 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-open class HomeActivity: BaseActivity<ActivityHomeBinding, HomeViewModel>() {
-    override val layoutId: Int get() = R.layout.activity_home
+class HomeActivity: BaseActivity<HomeViewModel>() {
+    //override val layoutId: Int get() = R.layout.activity_home
     override val viewModel: HomeViewModel by viewModels()
     lateinit var adapter: TrackAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mBinding.isNoData = false
 
+
+        setContent { BaseTheme {
+            TracksScreen(
+                modifier = Modifier.fillMaxSize(),
+                viewModel
+            )
+        } }
+/*
         adapter = TrackAdapter(arrayListOf())
 
         setUpRecyclerView()
@@ -34,11 +51,11 @@ open class HomeActivity: BaseActivity<ActivityHomeBinding, HomeViewModel>() {
                     adapter.list.clear()
                     adapter.list.addAll(it.valueOrNull.orEmpty())
                     adapter.notifyDataSetChanged()
-                    mBinding.refreshLayout.isRefreshing = false
+                    //mBinding.refreshLayout.isRefreshing = false
                     viewModel.showProgress.value = false
                 }
                 else if(it.isFail){
-                    mBinding.refreshLayout.isRefreshing = false
+                    //mBinding.refreshLayout.isRefreshing = false
                     viewModel.showProgress.value = false
                     viewModel.showToast.value = "failed"
                 }
@@ -53,28 +70,13 @@ open class HomeActivity: BaseActivity<ActivityHomeBinding, HomeViewModel>() {
             lifecycleScope.launch {
                 mViewModel.getLists()
             }
-        }
+        }*/
 
     }
-
 
     private fun setUpRecyclerView(){
         val layoutManager = LinearLayoutManager(this)
-        mBinding.recyclerView.layoutManager = layoutManager
-        mBinding.recyclerView.adapter = adapter
-    }
-
-
-    override fun onBackPressed() {
-        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.Q &&
-            isTaskRoot &&
-            (supportFragmentManager.primaryNavigationFragment?.childFragmentManager?.backStackEntryCount
-                ?: 0) == 0 &&
-            supportFragmentManager.backStackEntryCount == 0
-        ) {
-            finishAfterTransition()
-        } else {
-            super.onBackPressed()
-        }
+        //mBinding.recyclerView.layoutManager = layoutManager
+        //mBinding.recyclerView.adapter = adapter
     }
 }
