@@ -10,6 +10,8 @@ import com.sonicjar.media.R
 import com.sonicjar.media.databinding.ActivityHomeBinding
 import com.sonicjar.media.utils.bind
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -26,23 +28,26 @@ open class HomeActivity: BaseActivity<ActivityHomeBinding, HomeViewModel>() {
 
         setUpRecyclerView()
 
-        bind(viewModel.lists){
-            if(it.isSuccess){
-                adapter.list.clear()
-                adapter.list.addAll(it.valueOrNull.orEmpty())
-                adapter.notifyDataSetChanged()
-                mBinding.refreshLayout.isRefreshing = false
-                viewModel.showProgress.value = false
-            }
-            else if(it.isFail){
-                mBinding.refreshLayout.isRefreshing = false
-                viewModel.showProgress.value = false
-                viewModel.showToast.value = "failed"
-            }
-            else if(it.isLoading){
-                viewModel.showProgress.value = true
+        lifecycleScope.launch(Dispatchers.Main) {
+            viewModel.lists.collectLatest {
+                if(it.isSuccess){
+                    adapter.list.clear()
+                    adapter.list.addAll(it.valueOrNull.orEmpty())
+                    adapter.notifyDataSetChanged()
+                    mBinding.refreshLayout.isRefreshing = false
+                    viewModel.showProgress.value = false
+                }
+                else if(it.isFail){
+                    mBinding.refreshLayout.isRefreshing = false
+                    viewModel.showProgress.value = false
+                    viewModel.showToast.value = "failed"
+                }
+                else if(it.isLoading){
+                    viewModel.showProgress.value = true
+                }
             }
         }
+
 
         mBinding.refreshLayout.setOnRefreshListener {
             lifecycleScope.launch {
@@ -50,10 +55,6 @@ open class HomeActivity: BaseActivity<ActivityHomeBinding, HomeViewModel>() {
             }
         }
 
-
-        lifecycleScope.launch {
-            mViewModel.getLists()
-        }
     }
 
 
