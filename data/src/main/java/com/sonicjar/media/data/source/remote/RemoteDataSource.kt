@@ -43,7 +43,7 @@ class RemoteDataSource @Inject constructor(private val retrofitCalls: RetrofitCa
                     error?.let {
                         try {
                             if (response.code() == 400 || response.code() == 404 || response.code() == 500) {
-                                val itemType = object : TypeToken<T>() {}.type
+                                //val itemType = object : TypeToken<T>() {}.type
                                 val throwable = Throwable(error)
                                 Resource.Fail(throwable)
                             } else if (response.code() == 401 || response.code() == 402 || response.code() == 403) {

@@ -39,9 +39,10 @@ android {
 }
 
 dependencies {
-
     def coroutinesAndroidVersion = '1.9.0'
     def pagingVersion = "3.3.5"
+
+    implementation project(':data')
 
     def composeBom = platform('androidx.compose:compose-bom:2025.01.01')
     implementation composeBom
