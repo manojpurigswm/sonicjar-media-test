@@ -38,6 +38,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.bumptech.glide.integration.compose.placeholder
@@ -49,14 +50,11 @@ import com.sonicjar.media.data.Track
 @Composable
 fun TracksScreen(
     modifier: Modifier = Modifier,
-    viewModel: HomeViewModel,
-    snackbarHostState: SnackbarHostState = remember { SnackbarHostState() }
-){
+    viewModel: HomeViewModel){
     Scaffold(modifier = modifier.fillMaxSize(),
-        snackbarHost = { SnackbarHost(snackbarHostState) },
         topBar = { MyAppBar() }
     ){ paddingValues ->
-        val state = viewModel.lists.collectAsState()
+        val state = viewModel.lists.collectAsStateWithLifecycle()
         when(state.value){
             is Resource.Fail -> ErrorText(paddingValues)
             is Resource.Loading -> Loading(paddingValues)
